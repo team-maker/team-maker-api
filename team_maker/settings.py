@@ -37,9 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
+    'django_extensions',
+    'team_maker.core.apps.CoreConfig',
 ]
+
 AUTH_USER_MODEL = 'core.User'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -50,7 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'team_maker.urls'
+ROOT_URLCONF = 'team_maker.admin.urls'
 
 TEMPLATES = [
     {
