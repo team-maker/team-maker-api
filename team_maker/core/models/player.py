@@ -12,7 +12,7 @@ class Player(models.Model):
 
 
 class Experience(Enum):
-    AMADOR = 0
-    FEDERADO = 1000
-    SEMI_PROFISSIONAL = 2000
-    PROFISSIONAL = 3000
+    AMATEUR = 0
+    FEDERATE = 1000
+    SEMI_PROFESSIONAL = 2000
+    PROFESSIONAL = 3000
