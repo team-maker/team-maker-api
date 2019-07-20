@@ -5,10 +5,9 @@ from django.conf import settings
 
 class Player(models.Model):
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='player')
     points = models.IntegerField(default=0)
     experience = Experience
-    photo = models.ImageField(upload_to='uploads', blank=True)
 
 
 class Experience(Enum):

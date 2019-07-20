@@ -9,6 +9,7 @@ class User(AbstractUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
+    photo = models.ImageField(upload_to='uploads', blank=True)
 
 
 def __str__(self):
