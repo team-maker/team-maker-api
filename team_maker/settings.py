@@ -40,6 +40,11 @@ INSTALLED_APPS = [
     'django_extensions',
     'corsheaders',
     'team_maker.core.apps.CoreConfig',
+    'api',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+
 ]
 
 AUTH_USER_MODEL = 'core.User'
@@ -128,3 +133,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+###
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+REST_USE_JWT = True
