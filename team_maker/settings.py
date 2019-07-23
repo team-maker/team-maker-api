@@ -115,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # URL Configuration
 # ------------------------------------------------------------------------------
-# ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'team_maker.urls'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
