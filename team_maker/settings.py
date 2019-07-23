@@ -40,11 +40,10 @@ INSTALLED_APPS = [
     'django_extensions',
     'corsheaders',
     'team_maker.core.apps.CoreConfig',
-    'api',
+    'team_maker.api.apps.ApiConfig',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
-
 ]
 
 AUTH_USER_MODEL = 'core.User'
@@ -114,6 +113,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# URL Configuration
+# ------------------------------------------------------------------------------
+# ROOT_URLCONF = 'urls'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
