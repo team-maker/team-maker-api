@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 
 
-class User(AbstractUser):
+class Team(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
 
     USERNAME_FIELD = 'email'
