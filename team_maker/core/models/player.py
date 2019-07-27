@@ -1,17 +1,16 @@
-from enum import Enum
 from django.db import models
 from django.conf import settings
-from django.contrib.auth.models import Team
+from django.contrib.auth.models import User
 
 
 class Player(models.Model):
-    user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='player')
+    player = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='player')
     points = models.IntegerField(default=0)
     experience = Experience
 
-    team = models.ForeignKey(user, Team, related_name='team')
-    # related_name='team'?
+    def __str__(self):
+        return "{}".format(self.player)
 
 
 class Experience(Enum):
