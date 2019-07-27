@@ -10,6 +10,8 @@
 
  - install dependencies `pip3 install -r requirements.txt`
 
+ - Add dummy data to the db `python3 manage.py seed core --number=15`
+
 ## 3 - Run
 
 - Run the server `python3 manage.py runserver`

@@ -1,7 +1,5 @@
 from django.db import models
 from enum import Enum
-from django.conf import settings
-from .user import User
 
 
 class Experience(Enum):
@@ -13,11 +11,19 @@ class Experience(Enum):
 
 class Player(models.Model):
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='user')
-    points = models.IntegerField(default=0)
+        'core.User',
+        on_delete=models.CASCADE,
+        related_name='players'
+    )
     experience = models.CharField(
-        choices=[(Experience.AMATEUR, ('AMATEUR')), (Experience.FEDERATE, ('FEDERATE')),
-                 (Experience.SEMI_PROFESSIONAL, ('SEMI_PROFESSIONAL')), (Experience.PROFESSIONAL, ('PROFESSIONAL'))])
+        max_length=50,
+        choices=[
+            (Experience.AMATEUR, ('AMATEUR')),
+            (Experience.FEDERATE, ('FEDERATE')),
+            (Experience.SEMI_PROFESSIONAL, ('SEMI_PROFESSIONAL')),
+            (Experience.PROFESSIONAL, ('PROFESSIONAL'))
+        ]
+    )
 
     def __str__(self):
-        return "{}".format(self.player)
+        return "{}".format(self.user)
