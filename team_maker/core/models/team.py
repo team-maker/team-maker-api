@@ -1,7 +1,7 @@
 from django.db import models
-from django.conf import settings
-from django.contrib.auth.models import Player
 from django.utils.crypto import get_random_string
+from django.conf import settings
+from .player import Player
 
 
 class Team(models.Model):
