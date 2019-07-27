@@ -6,7 +6,7 @@ from django.utils.crypto import get_random_string
 
 class Team(models.Model):
     name = models.CharField(max_length=130)
-    members = models.ManyToManyField(Player, through='Team_Player')
+    players = models.ManyToManyField(Player, through='Team_Player')
     token = get_random_string(length=10)
 
     def __str__(self):
