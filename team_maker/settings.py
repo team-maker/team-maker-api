@@ -42,8 +42,6 @@ INSTALLED_APPS = [
     'team_maker.core.apps.CoreConfig',
     'team_maker.api.apps.ApiConfig',
     'rest_framework',
-    'rest_framework.authtoken',
-    'rest_auth',
     'django_seed'
 ]
 
@@ -63,6 +61,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'team_maker.admin.urls'
 
 CORS_ORIGIN_ALLOW_ALL = True
+CSRF_TRUSTED_ORIGINS = ['localhost:3000']
 
 TEMPLATES = [
     {
@@ -114,6 +113,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+JWT_AUTH = {
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'team_maker.api.auth.jwt_response_payload_handler'
+}
+
 # URL Configuration
 # ------------------------------------------------------------------------------
 ROOT_URLCONF = 'team_maker.urls'
@@ -137,7 +141,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 ###
-
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -148,5 +151,3 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ),
 }
-
-REST_USE_JWT = True

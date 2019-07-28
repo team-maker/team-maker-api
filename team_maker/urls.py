@@ -1,5 +1,5 @@
-
 from django.conf.urls import include, url
+
 
 urlpatterns = [
     url(r'^api/', include('team_maker.api.urls')),
