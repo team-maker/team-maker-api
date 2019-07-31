@@ -30,6 +30,5 @@ class FacebookLoginView(mixins.UpdateModelMixin,
         del(request_data['name'])
         del(request_data['image_url'])
         serializer = self.get_serializer(data=request_data)
-        print(request_data)
         updated_instance = serializer.update(self.get_object(), request_data)
         return Response(serializer.to_representation(updated_instance), status=status.HTTP_201_CREATED)

@@ -1,2 +1,3 @@
 from .user_serializer import UserSerializer
 from .user_serializer import UserSerializerWithToken
+from .player_serializer import PlayerSerializer
