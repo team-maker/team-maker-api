@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -115,7 +116,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
-    'JWT_RESPONSE_PAYLOAD_HANDLER': 'team_maker.api.auth.jwt_response_payload_handler'
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'team_maker.api.auth.jwt_response_payload_handler',
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=30),
 }
 
 # URL Configuration

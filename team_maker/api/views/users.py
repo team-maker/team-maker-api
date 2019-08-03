@@ -7,6 +7,19 @@ from team_maker.api import serializers
 from django.utils.crypto import get_random_string
 
 
+class UserView(mixins.RetrieveModelMixin,
+               generics.GenericAPIView):
+    renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
+    queryset = models.User.objects  # only users that can access the app
+    serializer_class = serializers.UserSerializer
+
+    def get_object(self):
+        return self.request.user
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+
 class FacebookLoginView(mixins.UpdateModelMixin,
                         generics.GenericAPIView):
     renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
@@ -28,7 +41,6 @@ class FacebookLoginView(mixins.UpdateModelMixin,
         request_data['first_name'] = names[0]
         request_data['last_name'] = names[-1]
         del(request_data['name'])
-        del(request_data['image_url'])
         serializer = self.get_serializer(data=request_data)
         updated_instance = serializer.update(self.get_object(), request_data)
         return Response(serializer.to_representation(updated_instance), status=status.HTTP_201_CREATED)

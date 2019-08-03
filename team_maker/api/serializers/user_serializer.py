@@ -7,7 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name',)
+        fields = ('email', 'first_name', 'last_name')
 
 
 class UserSerializerWithToken(serializers.Serializer):
@@ -21,9 +21,9 @@ class UserSerializerWithToken(serializers.Serializer):
         return token
 
     def update(self, instance, data):
-        print(data)
         for key, value in data.items():
-            setattr(instance, key, value)
+            if not instance._meta.get_field(key):
+                setattr(instance, key, value)
         instance.save()
         return instance
 

@@ -1,12 +1,5 @@
 from django.db import models
-
-
-EXPERIENCE_TYPES = (
-    ('amateur', 'Amateur'),
-    ('federate', 'Federate'),
-    ('semi_professional', 'Semi Professional'),
-    ('professional', 'Professional')
-)
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Player(models.Model):
@@ -15,9 +8,9 @@ class Player(models.Model):
         on_delete=models.CASCADE,
         related_name='player'
     )
-    experience = models.CharField(
-        max_length=50,
-        choices=EXPERIENCE_TYPES
+    rating = models.IntegerField(
+        default=5,
+        validators=[MinValueValidator(1), MaxValueValidator(10)]
     )
 
     def __str__(self):
