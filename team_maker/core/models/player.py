@@ -1,28 +1,16 @@
 from django.db import models
-from enum import Enum
-
-
-class Experience(Enum):
-    AMATEUR = 'AMATEUR'
-    FEDERATE = 'FEDERATE'
-    SEMI_PROFESSIONAL = 'SEMI_PROFESSIONAL'
-    PROFESSIONAL = 'PROFESSIONAL'
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Player(models.Model):
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         'core.User',
         on_delete=models.CASCADE,
-        related_name='players'
+        related_name='player'
     )
-    experience = models.CharField(
-        max_length=50,
-        choices=[
-            (Experience.AMATEUR, ('AMATEUR')),
-            (Experience.FEDERATE, ('FEDERATE')),
-            (Experience.SEMI_PROFESSIONAL, ('SEMI_PROFESSIONAL')),
-            (Experience.PROFESSIONAL, ('PROFESSIONAL'))
-        ]
+    rating = models.IntegerField(
+        default=5,
+        validators=[MinValueValidator(1), MaxValueValidator(10)]
     )
 
     def __str__(self):
