@@ -6,5 +6,7 @@ urlpatterns = [
     url(r'^login$', obtain_jwt_token),
     url(r'^facebook-login$', views.FacebookLoginView.as_view(), name='facebook-login'),
     url(r'^users$', views.UserView.as_view(), name='user'),
-    url(r'^players$', views.PlayersView.as_view(), name='player')
+    url(r'^players$', views.PlayersView.as_view(), name='player'),
+    url(r'^team-players$', views.TeamPlayerView.as_view(), name='team-player'),
+    url(r'^teams$', views.TeamView.as_view(), name='teams')
 ]

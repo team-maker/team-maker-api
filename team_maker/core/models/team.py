@@ -11,7 +11,11 @@ class Team(models.Model):
         'core.Player',
         through='TeamPlayer',
     )
-    token = get_random_string(length=15)
+    token = models.CharField(
+        max_length=40,
+        unique=True,
+        default=get_random_string(length=15),
+    )
 
     def __str__(self):
         return "{}".format(self.name)
