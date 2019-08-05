@@ -8,11 +8,11 @@ class UserPlayerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = ('rating', 'user')
+        fields = ('id', 'rating', 'user')
 
 
 class PlayerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = ('rating',)
+        fields = ('id', 'rating',)
