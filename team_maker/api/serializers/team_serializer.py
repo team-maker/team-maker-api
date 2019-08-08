@@ -1,10 +1,10 @@
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 from team_maker.core.models import Team
-from team_maker.api.serializers import UserPlayerSerializer
+from team_maker.api.serializers import PlayerSerializer
 
 
-class TeamSerializer(serializers.ModelSerializer):
-    players = UserPlayerSerializer(many=True, read_only=True)
+class TeamSerializer(ModelSerializer):
+    players = PlayerSerializer(many=True, required=False, read_only=True)
 
     class Meta:
         model = Team
