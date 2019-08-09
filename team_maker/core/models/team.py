@@ -14,8 +14,13 @@ class Team(models.Model):
     token = models.CharField(
         max_length=40,
         unique=True,
-        default=get_random_string(length=15),
     )
+    photo = models.ImageField(blank=True, upload_to='uploads')
 
     def __str__(self):
         return "{}".format(self.name)
+
+    def save(self, *args, **kwargs):
+        if not self.token:
+            self.token = get_random_string()
+        super(Team, self).save(*args, **kwargs)

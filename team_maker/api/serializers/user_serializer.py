@@ -1,16 +1,27 @@
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer, Serializer
 from rest_framework_jwt.settings import api_settings
 from team_maker.core.models import User
+from team_maker.api.serializers import PlayerSerializer
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(ModelSerializer):
+    player = PlayerSerializer()
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'first_name', 'last_name')
+        fields = ('id', 'email', 'first_name', 'last_name', 'player')
+
+    def update(self, instance, validated_data):
+        if 'player' in validated_data:
+            nested_serializer = self.fields['player']
+            nested_instance = instance.player
+            # note the data is `pop`ed
+            nested_data = validated_data.pop('player')
+            nested_serializer.update(nested_instance, nested_data)
+        return super(UserSerializer, self).update(instance, validated_data)
 
 
-class UserSerializerWithToken(serializers.Serializer):
+class UserSerializerWithToken(Serializer):
 
     def get_token(self, obj):
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER

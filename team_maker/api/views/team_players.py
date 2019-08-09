@@ -3,10 +3,12 @@ from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
 from rest_framework.renderers import BrowsableAPIRenderer, JSONRenderer
 from rest_framework import generics, status
+from rest_framework import viewsets
 from team_maker.api.serializers import TeamPlayerSerializer
 
 
-class TeamPlayerView(generics.ListCreateAPIView):
+class TeamPlayerView(viewsets.ViewSet,
+                     generics.ListCreateAPIView):
     renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
     queryset = models.TeamPlayer.objects  # only users that can access the app
     serializer_class = TeamPlayerSerializer
