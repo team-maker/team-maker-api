@@ -40,6 +40,9 @@ class FacebookLoginView(mixins.UpdateModelMixin,
         if created:
             obj.set_password(get_random_string())
             obj.save()
+        if obj.player is None:
+            obj.player = models.Player.create()
+            obj.save()
         return obj
 
     def put(self, request, *args, **kwargs):
