@@ -2,15 +2,17 @@ from team_maker.core import models
 from rest_framework.response import Response
 from rest_framework.renderers import BrowsableAPIRenderer, JSONRenderer
 from rest_framework import mixins, generics, status
-from team_maker.api import serializers
+from rest_framework import viewsets
+from team_maker.api.serializers import PlayerSerializer
 
 
-class PlayersView(mixins.RetrieveModelMixin,
+class PlayersView(viewsets.ViewSet,
+                  mixins.RetrieveModelMixin,
                   mixins.UpdateModelMixin,
                   generics.GenericAPIView):
     renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
     queryset = models.Player.objects  # only users that can access the app
-    serializer_class = serializers.PlayerSerializer
+    serializer_class = PlayerSerializer
 
     def get_object(self):
         user = self.request.user
@@ -23,6 +25,7 @@ class PlayersView(mixins.RetrieveModelMixin,
     def put(self, request, *args, **kwargs):
         player = self.get_object()
         user = player.user
+        print(request.data)
         user_data = request.data['user']
         for key, value in user_data.items():
             setattr(user, key, value)

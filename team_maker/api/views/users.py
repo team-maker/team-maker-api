@@ -3,18 +3,25 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.renderers import BrowsableAPIRenderer, JSONRenderer
 from rest_framework import status, mixins, generics
-from team_maker.api import serializers
+from rest_framework import viewsets
+from team_maker.api.serializers import UserSerializer, UserSerializerWithToken
 from django.utils.crypto import get_random_string
 
 
-class UserView(mixins.RetrieveModelMixin,
+class UserView(viewsets.ViewSet,
+               mixins.RetrieveModelMixin,
+               mixins.UpdateModelMixin,
                generics.GenericAPIView):
     renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
     queryset = models.User.objects  # only users that can access the app
-    serializer_class = serializers.UserSerializer
+    serializer_class = UserSerializer
 
     def get_object(self):
-        return self.request.user
+        user = self.request.user
+        if user.player is None:
+            user.player = models.Player.create()
+            user.save()
+        return user
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
@@ -24,7 +31,7 @@ class FacebookLoginView(mixins.UpdateModelMixin,
                         generics.GenericAPIView):
     renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
     queryset = models.User.objects  # only users that can access the app
-    serializer_class = serializers.UserSerializerWithToken
+    serializer_class = UserSerializerWithToken
     permission_classes = (AllowAny,)
 
     def get_object(self):
