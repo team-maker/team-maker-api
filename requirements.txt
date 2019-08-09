@@ -21,3 +21,4 @@ django-cors-headers==3.0.2
 djangorestframework-jwt==1.11.0 
 django-seed==0.1.9
 djangorestframework-jsonapi==2.8.0
+gunicorn
