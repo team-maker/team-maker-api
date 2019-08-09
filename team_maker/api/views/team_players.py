@@ -13,7 +13,7 @@ class TeamPlayerView(viewsets.ViewSet,
     queryset = models.TeamPlayer.objects  # only users that can access the app
     serializer_class = TeamPlayerSerializer
 
-    def post(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         player = self.request.user.player
         data = request.data
         team_token = data['team_token']
