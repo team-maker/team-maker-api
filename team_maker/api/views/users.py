@@ -1,6 +1,7 @@
 from team_maker.core import models
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.renderers import BrowsableAPIRenderer, JSONRenderer
 from rest_framework import status, mixins, generics
 from rest_framework import viewsets
@@ -18,9 +19,10 @@ class UserView(viewsets.ViewSet,
 
     def get_object(self):
         user = self.request.user
-        if user.player is None:
-            user.player = models.Player.create()
-            user.save()
+        try:
+            user.player
+        except ObjectDoesNotExist:
+            models.Player.objects.create(user_id=user.id)
         return user
 
     def get(self, request, *args, **kwargs):
@@ -40,9 +42,10 @@ class FacebookLoginView(mixins.UpdateModelMixin,
         if created:
             obj.set_password(get_random_string())
             obj.save()
-        if obj.player is None:
-            obj.player = models.Player.create()
-            obj.save()
+        try:
+            obj.player
+        except ObjectDoesNotExist:
+            models.Player.objects.create(user_id=obj.id)
         return obj
 
     def put(self, request, *args, **kwargs):
