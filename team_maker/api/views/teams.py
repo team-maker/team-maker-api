@@ -18,12 +18,12 @@ class TeamView(viewsets.ViewSet,
         queryset = self.queryset
         return queryset
 
-    def post(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         data = request.data
         serializer = self.get_serializer(data=data)
         team = serializer.create(data, *args, **kwargs)
         player = self.request.user.player
-
+        
         models.TeamPlayer.objects.create(team=team, player=player, admin=True)
         return Response(
             serializer.to_representation(team),
