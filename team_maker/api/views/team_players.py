@@ -22,7 +22,7 @@ class TeamPlayerView(viewsets.ViewSet,
         except models.Team.DoesNotExist:
             raise ValidationError('Team not found')
 
-        instance = self.queryset.create(team=team, player=player, admin=True)
+        instance, created = self.queryset.get_or_create(team=team, player=player)
         serializer = self.get_serializer()
         return Response(
             serializer.to_representation(instance),

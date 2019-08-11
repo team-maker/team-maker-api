@@ -12,6 +12,7 @@ router.register(r'users', views.UserView)
 router.register(r'players', views.PlayersView)
 router.register(r'team-players', views.TeamPlayerView)
 router.register(r'teams', views.TeamView)
+router.register(r'teams/token', views.TeamByTokenView)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
