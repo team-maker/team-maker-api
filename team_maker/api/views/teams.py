@@ -23,8 +23,8 @@ class TeamView(viewsets.ViewSet,
         serializer = self.get_serializer(data=data)
         team = serializer.create(data, *args, **kwargs)
         player = self.request.user.player
-
         models.TeamPlayer.objects.create(team=team, player=player, admin=True)
+
         return Response(
             serializer.to_representation(team),
             status=status.HTTP_201_CREATED
@@ -40,3 +40,17 @@ class TeamByTokenView(viewsets.ViewSet,
     def get_object(self):
         token = self.kwargs['pk']
         return self.queryset.get(token=token)
+
+
+class PlayerTeamsView(viewsets.ViewSet,
+                      generics.ListAPIView):
+    renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
+    queryset = models.Team.objects  # only users that can access the app
+    serializer_class = serializers.TeamSerializer
+
+    def get_queryset(self):
+        player_id = self.kwargs['player_pk']
+        # import code; code.interact(local=dict(globals(), **locals()))
+        teams = models.TeamPlayer.objects.filter(player_id=player_id).values_list('team_id', flat=True)
+        queryset = self.queryset.filter(id__in=teams)
+        return queryset

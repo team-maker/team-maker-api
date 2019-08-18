@@ -1,11 +1,11 @@
 from rest_framework import serializers
 from team_maker.core.models import TeamPlayer
-from team_maker.api.serializers import TeamSerializer
+from team_maker.api.serializers import PlayerSerializer
 
 
 class TeamPlayerSerializer(serializers.ModelSerializer):
-    team = TeamSerializer(read_only=True)
+    player = PlayerSerializer(read_only=True)
 
     class Meta:
         model = TeamPlayer
-        fields = ('id', 'team', 'admin', 'points')
+        fields = ('id', 'admin', 'points', 'player')
