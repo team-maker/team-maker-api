@@ -1,5 +1,6 @@
 from .player_serializer import PlayerSerializer
 from .user_serializer import UserSerializer
 from .user_serializer import UserSerializerWithToken
-from .team_serializer import TeamSerializer
 from .team_player_serializer import TeamPlayerSerializer
+from .team_player_stats_serializer import TeamPlayerStatsSerializer
+from .team_serializer import TeamSerializer
