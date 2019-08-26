@@ -43,8 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'team_maker.core.apps.CoreConfig',
     'team_maker.api.apps.ApiConfig',
-    'rest_framework',
-    'django_seed'
+    'rest_framework'
 ]
 
 AUTH_USER_MODEL = 'core.User'
