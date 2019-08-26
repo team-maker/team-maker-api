@@ -27,3 +27,6 @@ class Game(models.Model):
         on_delete=models.CASCADE
     )
     date = models.DateField(null=True)
+
+    def __str__(self):
+        return "Game at {} for Team: {}".format(self.date, self.team.name)

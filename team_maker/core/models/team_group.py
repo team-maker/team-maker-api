@@ -16,7 +16,8 @@ class TeamGroup(models.Model):
         'core.TeamPlayer',
         through='TeamGroupPlayer',
     )
+    calculated_ponderation = models.FloatField(null=True)
 
 
     def __str__(self):
-        return "{}".format('team player:' + self.player.user.email + '-' + self.team.name)
+        return "Group of team {} with: {} players".format(self.team.name, self.number_of_players)

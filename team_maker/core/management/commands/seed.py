@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from faker import Faker
+from datetime import date
 import random
 from team_maker.core import models
 from team_maker.core import services
@@ -12,7 +13,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         team = models.Team.objects.last()
-        services.teams.generate_balanced_teams(team)
+        game = models.Game.objects.create(team=team, date=date.today())
+        services.teams.generate_balanced_teams(game)
         # users_count = models.User.objects.count()
         # players_count = models.Player.objects.count()
         # team_players_count = models.TeamPlayer.objects.count()
