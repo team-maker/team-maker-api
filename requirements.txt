@@ -19,7 +19,7 @@ wrapt==1.11.1
 django-heroku==0.3.0
 psycopg2-binary==2.8.3
 django-cors-headers==3.0.2
-djangorestframework-jwt==1.11.0 
-django-seed==0.1.9
+djangorestframework-jwt==1.11.0
 djangorestframework-jsonapi==2.8.0
+Faker
 gunicorn
