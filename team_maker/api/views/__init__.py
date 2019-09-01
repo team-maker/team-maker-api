@@ -6,3 +6,4 @@ from .teams import TeamByTokenView
 from .teams import PlayerTeamsView
 from .team_players import TeamPlayerView
 from .team_players import TeamPlayerStatsView
+from .team_games import TeamGamesView

@@ -12,18 +12,17 @@ class Command(BaseCommand):
     help = 'Seed database'
 
     def handle(self, *args, **options):
-        team = models.Team.objects.last()
-        game = models.Game.objects.create(team=team, date=date.today())
-        services.teams.generate_balanced_teams(game)
         # users_count = models.User.objects.count()
         # players_count = models.Player.objects.count()
         # team_players_count = models.TeamPlayer.objects.count()
         # team = self.create_team()
-        # for x in range(12):
+        # for x in range(13):
         #     user = self.create_user()
         #     player = self.create_player(user.id)
         #     self.create_team_player(team, player)
-
+        team = models.Team.objects.last()
+        game = models.Game.objects.create(team=team, date=date.today())
+        services.teams.generate_balanced_teams(game)
         # self.stdout.write("Created Users: {}".format(models.User.objects.count() - users_count))
         # self.stdout.write("Created Players: {}".format(models.Player.objects.count() - players_count))
         # self.stdout.write("Created Team Players: {}".format(models.TeamPlayer.objects.count() - team_players_count))
