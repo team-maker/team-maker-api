@@ -8,7 +8,7 @@ class TeamPlayer(models.Model):
         on_delete=models.CASCADE,
         related_name='team_players'
     )
-    points = models.IntegerField(
+    points_total = models.IntegerField(
         default=0,
         validators=[MinValueValidator(1)]
     )
