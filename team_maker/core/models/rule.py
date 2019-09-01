@@ -4,6 +4,7 @@ from django.core.validators import MinValueValidator
 RULE_TYPES = (
     ('presence', 'Presence'),
     ('goal', 'Goal'),
+    ('hattrick', 'Hattrick'),
     ('goal_conceded', 'Goal Conceded'),
     ('clean_sheet', 'Clean Sheet'),
     ('own_goal', 'Own Goal')
