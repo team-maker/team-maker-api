@@ -8,3 +8,5 @@ from .team_group_player_serializer import TeamGroupPlayerSerializer
 from .team_group_serializer import TeamGroupSerializer
 from .team_game_serializer import TeamGameSerializer
 from .team_game_serializer import TeamGameDetailedSerializer
+from .rule_serializer import RuleSerializer
+from .team_rule_serializer import TeamRuleSerializer

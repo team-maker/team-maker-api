@@ -17,6 +17,7 @@ router.register(r'team-players', views.TeamPlayerView)
 router.register(r'teams', views.TeamView)
 teams_router = routers.NestedSimpleRouter(router, r'teams', lookup='team')
 teams_router.register(r'games', views.TeamGamesView, base_name='team-games')
+teams_router.register(r'rules', views.TeamRulesView, base_name='team-rules')
 router.register(r'teams/token', views.TeamByTokenView)
 
 urlpatterns = [

@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from .point import Point
 
 
 class TeamPlayer(models.Model):
@@ -8,7 +9,7 @@ class TeamPlayer(models.Model):
         on_delete=models.CASCADE,
         related_name='team_players'
     )
-    points = models.IntegerField(
+    points_total = models.IntegerField(
         default=0,
         validators=[MinValueValidator(1)]
     )
@@ -19,6 +20,8 @@ class TeamPlayer(models.Model):
     )
     admin = models.BooleanField(default=False)
 
+    def points(self):
+        return Point.objects.filter(team_group_player__team_player_id=self.id)
 
     def __str__(self):
         return "{}".format('team player:' + self.player.user.email + '-' + self.team.name)
