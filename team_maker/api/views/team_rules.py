@@ -10,6 +10,6 @@ class TeamRulesView(viewsets.ViewSet,
                     generics.UpdateAPIView,
                     generics.GenericAPIView):
     renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
-    queryset = models.TeamRule.objects  # only users that can access the app
+    queryset = models.TeamRule.objects.order_by('-points_amount')  # only users that can access the app
     serializer_class = serializers.TeamRuleSerializer
 
