@@ -18,6 +18,6 @@ class Point(models.Model):
     description = models.CharField(
         max_length=80
     )
-    points = models.IntegerField(
+    points_amount = models.IntegerField(
         validators=[MinValueValidator(1)]
     )

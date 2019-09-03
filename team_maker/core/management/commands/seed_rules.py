@@ -17,7 +17,7 @@ class Command(BaseCommand):
             default_points=3
         )
         models.Rule.objects.get_or_create(
-            description='Number of points for each game defeat',
+            description='Number of points to subtract for each game defeat',
             rule_type='game_defeat',
             default_points=-2
         )
@@ -39,7 +39,7 @@ class Command(BaseCommand):
         models.Rule.objects.get_or_create(
             description='Number of points for each 2 goals scored by the team',
             rule_type='goals_scored',
-            default_points=-1
+            default_points=1
         )
         models.Rule.objects.get_or_create(
             description='Number of points for each game without goals conceded',
