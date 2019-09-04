@@ -25,5 +25,9 @@ class TeamGroupPlayer(models.Model):
         )
         return values['points']
 
+    def get_team_goals_scored(self):
+        return self.team_group.goals()
+
+
     def __str__(self):
         return "{}".format('team player:' + self.player.user.email + '-' + self.team.name)

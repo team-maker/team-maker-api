@@ -9,6 +9,11 @@ class TeamGroup(models.Model):
         on_delete=models.CASCADE,
         related_name='team_groups'
     )
+    game = models.ForeignKey(
+        'core.Game',
+        on_delete=models.CASCADE,
+        related_name='team_groups'
+    )
     number_of_players = models.IntegerField(
         default=5,
         validators=[MinValueValidator(1)]
@@ -22,6 +27,12 @@ class TeamGroup(models.Model):
     def goals(self):
         team_group_ids = self.team_group_players.values_list('pk', flat=True)
         return Goal.objects.filter(team_group_id__in=team_group_ids)
+
+    def mvp(self):
+        self.team_group_players.order_by('-points_amount').first()
+
+    def players_with_hattrick(self):
+        return self.goals.filter(own_goal=False).annotate(total=models.Count('scorer_id')).filter(total__gte=3)
 
 
     def __str__(self):
