@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from .goal import Goal
 
 
 class TeamGroup(models.Model):
@@ -17,6 +18,10 @@ class TeamGroup(models.Model):
         through='TeamGroupPlayer',
     )
     calculated_ponderation = models.FloatField(null=True)
+
+    def goals(self):
+        team_group_ids = self.team_group_players.values_list('pk', flat=True)
+        return Goal.objects.filter(team_group_id__in=team_group_ids)
 
 
     def __str__(self):
