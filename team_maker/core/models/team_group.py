@@ -1,10 +1,16 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from .goal import Goal
 
 
 class TeamGroup(models.Model):
     team = models.ForeignKey(
         'core.Team',
+        on_delete=models.CASCADE,
+        related_name='team_groups'
+    )
+    game = models.ForeignKey(
+        'core.Game',
         on_delete=models.CASCADE,
         related_name='team_groups'
     )
@@ -17,6 +23,16 @@ class TeamGroup(models.Model):
         through='TeamGroupPlayer',
     )
     calculated_ponderation = models.FloatField(null=True)
+
+    def goals(self):
+        team_group_ids = self.team_group_players.values_list('pk', flat=True)
+        return Goal.objects.filter(team_group_id__in=team_group_ids)
+
+    def mvp(self):
+        self.team_group_players.order_by('-points_amount').first()
+
+    def players_with_hattrick(self):
+        return self.goals.filter(own_goal=False).annotate(total=models.Count('scorer_id')).filter(total__gte=3)
 
 
     def __str__(self):

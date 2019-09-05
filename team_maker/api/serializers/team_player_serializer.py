@@ -5,8 +5,8 @@ from team_maker.api.serializers import PlayerSerializer
 
 class TeamPlayerSerializer(serializers.ModelSerializer):
     player = PlayerSerializer(read_only=True)
-    team = serializers.PrimaryKeyRelatedField(read_only=True)
+    team_id = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = TeamPlayer
-        fields = ('id', 'admin', 'points', 'player', 'team')
+        fields = ('id', 'admin', 'points', 'player', 'team_id')

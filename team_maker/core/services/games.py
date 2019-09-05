@@ -9,7 +9,7 @@ def generate_balanced_teams(game):
     team_players = team.team_players.all()
     player_values = []
     for team_player in team_players:
-        value = team_player.player.rating * OWN_RATING_WEIGHT + team_player.points * CURRENT_POINTS_WEIGHT
+        value = team_player.player.rating * OWN_RATING_WEIGHT + team_player.points_total * CURRENT_POINTS_WEIGHT
         player_values.append({'team_player': team_player, 'value': value})
     player_values.sort(key=lambda i: i['value'], reverse=True)
     home_team = []
@@ -22,11 +22,13 @@ def generate_balanced_teams(game):
     home_value = sum([item['value'] for item in home_team])
     away_value = sum([item['value'] for item in away_team])
     game.home_team = models.TeamGroup.objects.create(
+        game=game,
         calculated_ponderation=home_value,
         number_of_players=len(home_team),
         team=team
     )
     game.away_team = models.TeamGroup.objects.create(
+        game=game,
         calculated_ponderation=away_value,
         number_of_players=len(away_team),
         team=team

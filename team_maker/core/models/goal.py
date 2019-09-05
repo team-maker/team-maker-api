@@ -5,7 +5,7 @@ class Goal(models.Model):
     scorer = models.ForeignKey(
         'core.TeamGroupPlayer',
         null=False,
-        related_name='scorer',
+        related_name='scored_goals',
         on_delete=models.CASCADE
     )
     game = models.ForeignKey(
