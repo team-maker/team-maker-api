@@ -31,6 +31,25 @@ class TeamPlayerView(viewsets.ViewSet,
         )
 
 
+class CurrentTeamPlayerView(viewsets.ViewSet,
+                            generics.ListAPIView):
+    renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
+    queryset = models.TeamPlayer.objects  # only users that can access the app
+    serializer_class = TeamPlayerStatsSerializer
+
+    def get_queryset(self):
+        queryset = self.queryset.filter(team_id=self.kwargs['team_pk'])
+        return queryset
+
+    def list(self, request, *args, **kwargs):
+        player = self.request.user.player
+        instance = self.queryset.get(player=player)
+        serializer = self.get_serializer()
+        return Response(
+            serializer.to_representation(instance),
+        )
+
+
 class TeamPlayerStatsView(mixins.RetrieveModelMixin,
                           generics.GenericAPIView):
     renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
