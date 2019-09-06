@@ -26,7 +26,7 @@ class TeamGroup(models.Model):
 
     def goals(self):
         team_group_ids = self.team_group_players.values_list('pk', flat=True)
-        return Goal.objects.filter(team_group_id__in=team_group_ids)
+        return Goal.objects.filter(scorer__id__in=team_group_ids)
 
     def mvp(self):
         self.team_group_players.order_by('-points_amount').first()

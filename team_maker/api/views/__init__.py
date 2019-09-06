@@ -11,3 +11,4 @@ from .team_games import TeamGamesView
 from .team_rules import TeamRulesView
 from .team_points import TeamPointsView
 from .team_group_players import TeamGroupPlayerView
+from .game_goals import GameGoalsView

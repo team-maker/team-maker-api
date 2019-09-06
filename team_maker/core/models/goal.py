@@ -15,3 +15,6 @@ class Goal(models.Model):
         on_delete=models.CASCADE
     )
     own_goal = models.BooleanField(default=False)
+
+    def team_group(self):
+        return self.team_group_player.team_group
