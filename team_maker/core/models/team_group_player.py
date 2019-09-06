@@ -30,4 +30,4 @@ class TeamGroupPlayer(models.Model):
 
 
     def __str__(self):
-        return "{}".format('team player:' + self.player.user.email + '-' + self.team.name)
+        return "team player: {} - {}".format(self.team_player.player.user.email,  self.points_amount)
