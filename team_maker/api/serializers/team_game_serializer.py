@@ -8,10 +8,10 @@ class TeamGameSerializer(ModelSerializer):
 
     class Meta:
         model = Game
-        fields = ('id', 'date', 'num_goals')
+        fields = ('id', 'date', 'finished' 'num_goals')
 
     def get_num_goals(self, instance):
-        return instance.goals.count()
+        return instance.goals().count()
 
 
 class TeamGameDetailedSerializer(ModelSerializer):
@@ -20,4 +20,4 @@ class TeamGameDetailedSerializer(ModelSerializer):
 
     class Meta:
         model = Game
-        fields = ('id', 'date', 'home_team', 'away_team')
+        fields = ('id', 'date', 'finished', 'home_team', 'away_team')

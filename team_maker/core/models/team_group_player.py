@@ -19,11 +19,12 @@ class TeamGroupPlayer(models.Model):
         default=0
     )
 
-    def get_points_amount(self):
+    def recalculate_points_amount(self):
         values = self.points.aggregate(
             points=Coalesce(models.Sum('points_amount'), 0)
         )
-        return values['points']
+        self.points_amount = values['points']
+        self.save()
 
     def get_team_goals_scored(self):
         return self.team_group.goals()

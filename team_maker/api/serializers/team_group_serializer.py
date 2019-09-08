@@ -9,7 +9,7 @@ class TeamGroupSerializer(ModelSerializer):
 
     class Meta:
         model = TeamGroup
-        fields = ('id', 'number_of_players', 'calculated_ponderation', 'goals','team_group_players')
+        fields = ('id', 'number_of_players', 'calculated_ponderation', 'goals', 'team_group_players')
 
     def get_goals(self, instance):
         return instance.goals().count()

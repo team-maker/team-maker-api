@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.db.models.functions import Coalesce
 from .point import Point
 from .game import Game
 from .goal import Goal
@@ -36,6 +37,13 @@ class TeamPlayer(models.Model):
     def own_goals(self):
         team_group_player_ids = self.team_group_players.values_list('pk', flat=True)
         return Goal.objects.filter(scorer_id__in=team_group_player_ids, own_goal=True)
+
+    def recalculate_points_amount(self):
+        values = self.team_group_players.aggregate(
+            points=Coalesce(models.Sum('points_amount'), 0)
+        )
+        self.points_total = values['points']
+        self.save()
 
 
     def __str__(self):

@@ -1,9 +1,11 @@
 from team_maker.core import models
 from rest_framework.response import Response
 from rest_framework.renderers import BrowsableAPIRenderer, JSONRenderer
+from rest_framework.decorators import action
 from rest_framework import generics, status
 from rest_framework import viewsets
 from team_maker.api import serializers
+from team_maker.core import services
 
 
 class TeamGamesView(viewsets.ViewSet,
@@ -18,21 +20,21 @@ class TeamGamesView(viewsets.ViewSet,
         queryset = self.queryset.filter(team_id=self.kwargs['team_pk'])
         return queryset
 
+    def get_object(self):
+        game = self.get_queryset().get(pk=self.kwargs['pk'])
+        return game
+
     def get_serializer_class(self):
-        if self.action == 'list':
-            return serializers.TeamGameSerializer
-        if self.action == 'retrieve':
-            return serializers.TeamGameDetailedSerializer
+        return serializers.TeamGameDetailedSerializer
 
-    def create(self, request, *args, **kwargs):
-        data = request.data
-        serializer = self.get_serializer(data=data)
-        team = serializer.create(data, *args, **kwargs)
-        player = self.request.user.player
-        models.TeamPlayer.objects.create(team=team, player=player, admin=True)
-
+    @action(detail=True, methods=['put'])
+    def finish(self, request, *args, **kwargs):
+        game = self.get_object()
+        services.games.distribute_game_points(game)
+        game.finished = True
+        game.save()
+        serializer = self.get_serializer()
         return Response(
-            serializer.to_representation(team),
-            status=status.HTTP_201_CREATED
+            serializer.to_representation(game),
+            status=status.HTTP_200_OK
         )
-
