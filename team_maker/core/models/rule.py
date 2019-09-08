@@ -11,7 +11,6 @@ RULE_TYPES = (
     ('game_victory', 'Game Victory'),
     ('game_defeat', 'Game Defeat'),
     ('game_mvp', 'Game MVP'),
-
 )
 
 

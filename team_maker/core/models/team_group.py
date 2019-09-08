@@ -26,13 +26,13 @@ class TeamGroup(models.Model):
 
     def goals(self):
         team_group_ids = self.team_group_players.values_list('pk', flat=True)
-        return Goal.objects.filter(scorer__id__in=team_group_ids)
+        return Goal.objects.filter(scorer__id__in=team_group_ids).all()
 
-    def mvp(self):
-        self.team_group_players.order_by('-points_amount').first()
+    def mvps(self):
+        self.team_group_players.order_by('-points_amount')
 
-    def players_with_hattrick(self):
-        return self.goals.filter(own_goal=False).annotate(total=models.Count('scorer_id')).filter(total__gte=3)
+    def hattricks(self):
+        return self.goals().filter(own_goal=False).annotate(total=models.Count('scorer_id')).filter(total__gte=3)
 
 
     def __str__(self):

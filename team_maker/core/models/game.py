@@ -23,24 +23,30 @@ class Game(models.Model):
     date = models.DateField(null=True)
     finished = models.BooleanField(default=False)
 
-    def game_goals(self):
-        return self.home_team_goals() | self.away_team_goals()
+    def own_goals(self):
+        return self.goals.filter(own_goal=True)
+
+    def scored_goals(self):
+        return self.goals.filter(own_goal=False)
 
     def game_mvps(self):
-        home_team_mvp = self.home_team.mvp()
-        away_team_mvp = self.away_team.mvp()
-        if (home_team_mvp.points_amount > away_team_mvp.points_amount):
-            return [home_team_mvp]
-        elif (away_team_mvp.points_amount > home_team_mvp.points_amount):
-            return [away_team_mvp]
-        else:
-            return [home_team_mvp, away_team_mvp]
+        points_max = self.game_team_group_players().aggregate(models.Max('points_amount'))['points_amount__max']
+        self.game_team_group_players().filter(points_amount=points_max)
 
     def home_team_goals(self):
         return self.home_team.goals()
 
     def away_team_goals(self):
         return self.away_team.goals()
+
+    def home_team_group_players(self):
+        return self.home_team.team_group_players.all()
+
+    def away_team_group_players(self):
+        return self.away_team.team_group_players.all()
+
+    def game_team_group_players(self):
+        return (self.home_team_group_players() | self.away_team_group_players())
 
     def winner_team(self):
         home_team_goals = self.home_team.goals().count()

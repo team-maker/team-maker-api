@@ -1,4 +1,5 @@
 from team_maker.core import models
+from .rules import generate_rule_points
 
 OWN_RATING_WEIGHT = 0.8
 CURRENT_POINTS_WEIGHT = 0.2
@@ -39,3 +40,13 @@ def generate_balanced_teams(game):
     for player_value in away_team:
         game.away_team.team_group_players.create(team_player=player_value['team_player'])
 
+
+def distribute_game_points(game):
+    team = game.team
+    team_rules = models.TeamRule.objects.filter(team=team)
+    for team_rule in team_rules:
+        generate_rule_points(team_rule, game)
+    for team_group_player in game.game_team_group_players():
+        team_group_player.recalculate_points_amount()
+        team_group_player.team_player.recalculate_points_amount()
+    
