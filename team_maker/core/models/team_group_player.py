@@ -26,7 +26,7 @@ class TeamGroupPlayer(models.Model):
         self.points_amount = values['points']
         self.save()
 
-    def get_team_goals_scored(self):
+    def team_goals_scored(self):
         return self.team_group.goals()
 
 

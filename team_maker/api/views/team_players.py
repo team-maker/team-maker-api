@@ -11,7 +11,7 @@ from team_maker.api.serializers import TeamPlayerStatsSerializer
 class TeamPlayerView(viewsets.ViewSet,
                      generics.ListCreateAPIView):
     renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
-    queryset = models.TeamPlayer.objects  # only users that can access the app
+    queryset = models.TeamPlayer.objects.order_by('-points_total')  # only users that can access the app
     serializer_class = TeamPlayerSerializer
 
     def create(self, request, *args, **kwargs):
@@ -53,7 +53,7 @@ class CurrentTeamPlayerView(viewsets.ViewSet,
 class TeamPlayerStatsView(mixins.RetrieveModelMixin,
                           generics.GenericAPIView):
     renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
-    queryset = models.TeamPlayer.objects  # only users that can access the app
+    queryset = models.TeamPlayer.objects.order_by('-points_total')  # only users that can access the app
     serializer_class = TeamPlayerStatsSerializer
 
     def get_object(self):

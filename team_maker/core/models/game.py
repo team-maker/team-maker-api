@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.functions import Coalesce
 
 
 class Game(models.Model):
@@ -30,8 +31,10 @@ class Game(models.Model):
         return self.goals.filter(own_goal=False)
 
     def game_mvps(self):
-        points_max = self.game_team_group_players().aggregate(models.Max('points_amount'))['points_amount__max']
-        self.game_team_group_players().filter(points_amount=points_max)
+        points_max = self.game_team_group_players().aggregate(
+            models.Max('points_amount')
+        )['points_amount__max']
+        return self.game_team_group_players().filter(points_amount=points_max)
 
     def home_team_goals(self):
         return self.home_team.goals()
@@ -63,6 +66,12 @@ class Game(models.Model):
 
     def away_team_clean_sheet(self):
         return self.home_team_goals().count() == 0
+
+    def generated_points(self):
+        values = self.game_team_group_players().aggregate(
+            points=Coalesce(models.Sum('points_amount'), 0)
+        )
+        return values['points']
 
     def __str__(self):
         return "Game at {} for Team: {}".format(self.date, self.team.name)
