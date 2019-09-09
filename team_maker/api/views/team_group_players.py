@@ -17,5 +17,5 @@ class TeamGroupPlayerView(viewsets.ViewSet,
         team_group_ids = [game.home_team.id, game.away_team.id]
         queryset = self.queryset.filter(
             team_group_id__in=team_group_ids
-        ).order_by('-points_amount')
+        ).order_by('-points_amount', 'team_player__position')
         return queryset

@@ -11,7 +11,16 @@ class TeamPlayerStatsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TeamPlayer
-        fields = ('id', 'admin', 'points_total', 'player', 'goals_scored', 'own_goals', 'games_played')
+        fields = (
+            'id',
+            'admin',
+            'points_total',
+            'position',
+            'player',
+            'goals_scored',
+            'own_goals',
+            'games_played'
+        )
 
     def get_goals_scored(self, instance):
         return instance.goals_scored().count()

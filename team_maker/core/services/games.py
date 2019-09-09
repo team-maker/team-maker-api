@@ -49,4 +49,10 @@ def distribute_game_points(game):
     for team_group_player in game.game_team_group_players():
         team_group_player.recalculate_points_amount()
         team_group_player.team_player.recalculate_points_amount()
+    position = 1
+    for team_player in team.team_players.order_by('-points_total'):
+        team_player.position = position
+        team_player.save()
+        position += 1
+
     

@@ -17,6 +17,7 @@ class TeamPlayerSerializer(ModelSerializer):
             'points_total',
             'goals_scored',
             'games_played',
+            'position',
             'player',
             'team_id'
         )

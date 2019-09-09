@@ -16,6 +16,10 @@ class TeamPlayer(models.Model):
         default=0,
         validators=[MinValueValidator(1)]
     )
+    position = models.IntegerField(
+        default=1,
+        validators=[MinValueValidator(1)]
+    )
     team = models.ForeignKey(
         'core.Team',
         on_delete=models.CASCADE,
