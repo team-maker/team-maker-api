@@ -25,7 +25,6 @@ class PlayersView(viewsets.ViewSet,
     def put(self, request, *args, **kwargs):
         player = self.get_object()
         user = player.user
-        print(request.data)
         user_data = request.data['user']
         for key, value in user_data.items():
             setattr(user, key, value)

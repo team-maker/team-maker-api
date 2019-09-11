@@ -24,8 +24,25 @@ class TeamGamesView(viewsets.ViewSet,
         game = self.get_queryset().get(pk=self.kwargs['pk'])
         return game
 
-    def get_serializer_class(self):
-        return serializers.TeamGameDetailedSerializer
+    def create(self, request, *args, **kwargs):
+        game = self.get_queryset().create(
+            team_id=self.kwargs['team_pk'],
+            date=request.data['date']
+        )
+        game.home_team = models.TeamGroup.objects.create(
+            team_id=self.kwargs['team_pk'],
+            game_id=game.id
+        )
+        game.away_team = models.TeamGroup.objects.create(
+            team_id=self.kwargs['team_pk'],
+            game_id=game.id
+        )
+        game.save()
+        serializer = self.get_serializer()
+        return Response(
+            serializer.to_representation(game),
+            status=status.HTTP_200_OK
+        )
 
     @action(detail=True, methods=['put'])
     def finish(self, request, *args, **kwargs):
