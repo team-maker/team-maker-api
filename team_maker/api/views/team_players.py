@@ -43,7 +43,10 @@ class CurrentTeamPlayerView(viewsets.ViewSet,
 
     def list(self, request, *args, **kwargs):
         player = self.request.user.player
-        instance = self.queryset.get(player=player)
+        instance = self.queryset.get(
+            team_id=self.kwargs['team_pk'],
+            player=player
+        )
         serializer = self.get_serializer()
         return Response(
             serializer.to_representation(instance),
