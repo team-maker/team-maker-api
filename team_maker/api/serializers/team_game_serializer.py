@@ -5,21 +5,6 @@ from team_maker.api.serializers import TeamGroupPlayerSerializer
 
 
 class TeamGameSerializer(ModelSerializer):
-    num_goals = SerializerMethodField(read_only=True)
-    generated_points = SerializerMethodField(read_only=True)
-
-    class Meta:
-        model = Game
-        fields = ('id', 'date', 'finished' 'num_goals', 'generated_points')
-
-    def get_num_goals(self, instance):
-        return instance.goals.count()
-
-    def get_generated_points(self, instance):
-        return instance.generated_points()
-
-
-class TeamGameDetailedSerializer(ModelSerializer):
     home_team = TeamGroupSerializer(read_only=True)
     away_team = TeamGroupSerializer(read_only=True)
     num_goals = SerializerMethodField(read_only=True)
@@ -31,6 +16,7 @@ class TeamGameDetailedSerializer(ModelSerializer):
         fields = (
             'id',
             'date',
+            'team_id',
             'finished',
             'num_goals',
             'mvps',
@@ -43,8 +29,12 @@ class TeamGameDetailedSerializer(ModelSerializer):
         return instance.goals.count()
 
     def get_generated_points(self, instance):
-        return instance.generated_points()
+        if instance.finished:
+            return instance.generated_points()
+        return 0
 
     def get_mvps(self, instance):
-        mvps = instance.game_mvps()
-        return TeamGroupPlayerSerializer(mvps, many=True).data
+        if instance.finished:
+            mvps = instance.game_mvps()
+            return TeamGroupPlayerSerializer(mvps, many=True).data
+        return []
