@@ -26,7 +26,7 @@ class Command(BaseCommand):
         # self.create_player(team, 'convidado_2@runtime-revolution.com', 'Loureiro', '(Amigo Fred)', 8)
         # self.create_player(team, 'convidado_3@runtime-revolution.com', 'João', '(Amigo Rúben)', 9)
         game_date = date.today() + datetime.timedelta(days=1)
-        game = models.Game.objects.filter(team=team, date=game_date).last()
+        game = models.Game.objects.create(team=team, date=game_date)
         services.games.generate_balanced_teams(game)
 
     def create_player(self, team, email, first_name, last_name, rating):

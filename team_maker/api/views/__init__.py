@@ -8,8 +8,8 @@ from .team_players import TeamPlayerView
 from .team_players import TeamPlayerStatsView
 from .team_players import CurrentTeamPlayerView
 from .team_games import TeamGamesView
-from .team_games import AvailablePlayersView
 from .team_rules import TeamRulesView
 from .team_points import TeamPointsView
 from .team_group_players import TeamGroupPlayerView
 from .game_goals import GameGoalsView
+from .game_available_players import AvailablePlayersView
