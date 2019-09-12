@@ -55,3 +55,15 @@ class TeamGamesView(viewsets.ViewSet,
             serializer.to_representation(game),
             status=status.HTTP_200_OK
         )
+
+
+class AvailablePlayersView(viewsets.ViewSet,
+                           generics.ListCreateAPIView):
+    renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
+    queryset = models.GameAvailablePlayer.objects
+    serializer_class = serializers.GameAvailablePlayerSerializer
+
+    def get_queryset(self):
+        game = models.Game.objects.get(pk=self.kwargs['game_pk'])
+        return game.available_players
+

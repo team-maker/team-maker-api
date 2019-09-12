@@ -22,6 +22,7 @@ teams_router.register(r'games', views.TeamGamesView, base_name='team-games')
 teams_router.register(r'rules', views.TeamRulesView, base_name='team-rules')
 
 games_router = routers.NestedSimpleRouter(teams_router, r'games', lookup='game')
+games_router.register(r'available-players', views.AvailablePlayersView, base_name='available-players')
 games_router.register(r'group-players', views.TeamGroupPlayerView, base_name='team-group-players')
 games_router.register(r'goals', views.GameGoalsView, base_name='goals')
 router.register(r'teams/token', views.TeamByTokenView)

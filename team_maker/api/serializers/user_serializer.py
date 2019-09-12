@@ -27,6 +27,7 @@ class UserSerializer(ModelSerializer):
             # note the data is `pop`ed
             nested_data = validated_data.pop('player')
             nested_serializer.update(nested_instance, nested_data)
+        return super(UserSerializer, self).update(instance, validated_data)
 
 
 class UserSerializerWithToken(ModelSerializer):

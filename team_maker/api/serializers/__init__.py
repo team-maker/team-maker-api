@@ -11,3 +11,4 @@ from .rule_serializer import RuleSerializer
 from .team_rule_serializer import TeamRuleSerializer
 from .point_serializer import PointSerializer
 from .goal_serializer import GoalSerializer
+from .game_available_player_serializer import GameAvailablePlayerSerializer

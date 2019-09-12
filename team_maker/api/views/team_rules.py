@@ -13,3 +13,6 @@ class TeamRulesView(viewsets.ViewSet,
     queryset = models.TeamRule.objects.order_by('-points_amount')  # only users that can access the app
     serializer_class = serializers.TeamRuleSerializer
 
+    def get_queryset(self):
+        queryset = self.queryset.filter(team_id=self.kwargs['team_pk'])
+        return queryset

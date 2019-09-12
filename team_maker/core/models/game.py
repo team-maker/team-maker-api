@@ -1,8 +1,22 @@
 from django.db import models
 from django.db.models.functions import Coalesce
+from .game_available_player import GameAvailablePlayer
+
+
+class CustomGameManager(models.Manager):
+    def create(self, *args, **kwargs):
+        game = super(CustomGameManager, self).create(**kwargs)
+        for team_player in game.team.team_players.all():
+            GameAvailablePlayer.objects.create(
+                game=game,
+                team_player=team_player
+            )
+        return game
 
 
 class Game(models.Model):
+    objects = CustomGameManager()
+
     team = models.ForeignKey(
         'core.Team',
         null=False,
