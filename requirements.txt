@@ -17,9 +17,12 @@ six
 virtualenv
 wrapt
 django-heroku
+datadog
 psycopg2-binary
 django-cors-headers
 djangorestframework-jwt
 djangorestframework-jsonapi
 Faker
 gunicorn
+sentry-sdk
+django-environ
