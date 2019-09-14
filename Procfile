@@ -1,1 +1,1 @@
-web: gunicorn team_maker.wsgi
+web: gunicorn team_maker.config.wsgi
