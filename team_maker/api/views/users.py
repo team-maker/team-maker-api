@@ -50,8 +50,10 @@ class FacebookLoginView(mixins.UpdateModelMixin,
 
     def get_object(self):
         queryset = self.get_queryset()
-        obj, created = queryset.get_or_create(email=self.request.data['email'])
-        if created:
+        try:
+            obj = queryset.get(email=self.request.data['email'])
+        except models.User.DoesNotExist:
+            obj = queryset.create(email=self.request.data['email'])
             obj.set_password(get_random_string())
             obj.save()
         return obj
