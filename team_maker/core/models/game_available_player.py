@@ -25,4 +25,4 @@ class GameAvailablePlayer(models.Model):
     )
 
     def __str__(self):
-        return "Team Player: {} - {}".format(self.team_player + '-' + self.availability)
+        return "Team Player: {} - {}".format(self.team_player, self.availability)
