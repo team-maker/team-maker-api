@@ -44,6 +44,17 @@ class TeamGamesView(viewsets.ViewSet,
             status=status.HTTP_200_OK
         )
 
+    @action(detail=True, methods=['post'])
+    def generate_teams(self, request, *args, **kwargs):
+        game = self.get_object()
+        services.games.generate_balanced_teams(game)
+        game.save()
+        serializer = self.get_serializer()
+        return Response(
+            serializer.to_representation(game),
+            status=status.HTTP_200_OK
+        )
+
     @action(detail=True, methods=['put'])
     def finish(self, request, *args, **kwargs):
         game = self.get_object()

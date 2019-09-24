@@ -22,18 +22,33 @@ def generate_balanced_teams(game):
             away_team.append(player_value)
     home_value = sum([item['value'] for item in home_team])
     away_value = sum([item['value'] for item in away_team])
-    game.home_team = models.TeamGroup.objects.create(
-        game=game,
-        calculated_ponderation=home_value,
-        number_of_players=len(home_team),
-        team=team
-    )
-    game.away_team = models.TeamGroup.objects.create(
-        game=game,
-        calculated_ponderation=away_value,
-        number_of_players=len(away_team),
-        team=team
-    )
+
+    if not game.home_team:
+        game.home_team = models.TeamGroup.objects.create(
+            game=game,
+            calculated_ponderation=home_value,
+            number_of_players=len(home_team),
+            team=team
+        )
+    else:
+        game.home_team.calculated_ponderation = home_value
+        game.home_team.number_of_players = len(home_team)
+        game.home_team.team_group_players.all().delete()
+        game.home_team.save()
+
+    if not game.away_team:
+        game.away_team = models.TeamGroup.objects.create(
+            game=game,
+            calculated_ponderation=away_value,
+            number_of_players=len(away_team),
+            team=team
+        )
+    else:
+        game.away_team.calculated_ponderation = home_value
+        game.away_team.number_of_players = len(away_team)
+        game.away_team.team_group_players.all().delete()
+        game.away_team.save()
+
     game.save()
     for player_value in home_team:
         game.home_team.team_group_players.create(team_player=player_value['team_player'])
