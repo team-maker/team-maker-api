@@ -5,7 +5,7 @@ from .game_available_player import GameAvailablePlayer
 
 class CustomGameManager(models.Manager):
     def create(self, *args, **kwargs):
-        game = super(CustomGameManager, self).create(**kwargs)
+        game = super(CustomGameManager, self).create(*args, **kwargs)
         for team_player in game.team.team_players.all():
             GameAvailablePlayer.objects.create(
                 game=game,
@@ -86,6 +86,7 @@ class Game(models.Model):
             points=Coalesce(models.Sum('points_amount'), 0)
         )
         return values['points']
+
 
     def __str__(self):
         return "Game at {} for Team: {}".format(self.date, self.team.name)

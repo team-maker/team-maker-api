@@ -115,7 +115,7 @@ def generate_game_victory_points(team_rule, game):
     winner_team = game.winner_team()
     if winner_team is None:
         return
-    for team_group_player in winner_team.team_group_players:
+    for team_group_player in winner_team.team_group_players.all():
         models.Point.objects.create(
             team_group_player=team_group_player,
             points_amount=team_rule.points_amount,
@@ -128,8 +128,14 @@ def generate_game_defeat_points(team_rule, game):
     winner_team = game.winner_team()
     if winner_team is None:
         return
-    loser_team = game.home_team == winner_team if game.away_team else game.home_team
-    for team_group_player in loser_team.team_group_players:
+
+    loser_team = None
+    if(winner_team == game.away_team):
+        loser_team = game.home_team
+    else:
+        loser_team = game.away_team
+
+    for team_group_player in loser_team.team_group_players.all():
         models.Point.objects.create(
             team_group_player=team_group_player,
             points_amount=team_rule.points_amount,

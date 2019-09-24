@@ -25,7 +25,7 @@ class TeamGamesView(viewsets.ViewSet,
         return game
 
     def create(self, request, *args, **kwargs):
-        game = self.get_queryset().create(
+        game = self.queryset.create(
             team_id=self.kwargs['team_pk'],
             date=request.data['date']
         )
@@ -37,6 +37,17 @@ class TeamGamesView(viewsets.ViewSet,
             team_id=self.kwargs['team_pk'],
             game_id=game.id
         )
+        game.save()
+        serializer = self.get_serializer()
+        return Response(
+            serializer.to_representation(game),
+            status=status.HTTP_200_OK
+        )
+
+    @action(detail=True, methods=['post'])
+    def generate_teams(self, request, *args, **kwargs):
+        game = self.get_object()
+        services.games.generate_balanced_teams(game)
         game.save()
         serializer = self.get_serializer()
         return Response(
