@@ -6,12 +6,12 @@ from .goal import Goal
 class TeamGroup(models.Model):
     team = models.ForeignKey(
         'core.Team',
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         related_name='team_groups'
     )
     game = models.ForeignKey(
         'core.Game',
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         related_name='team_groups'
     )
     number_of_players = models.IntegerField(
