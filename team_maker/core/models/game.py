@@ -21,7 +21,7 @@ class Game(models.Model):
         'core.Team',
         null=False,
         related_name='team',
-        on_delete=models.CASCADE
+        on_delete=models.DO_NOTHING
     )
     home_team = models.OneToOneField(
         'core.TeamGroup',
