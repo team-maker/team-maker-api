@@ -6,12 +6,12 @@ from django.core.validators import MinValueValidator
 class TeamGroupPlayer(models.Model):
     team_group = models.ForeignKey(
         'core.TeamGroup',
-        on_delete=models.CASCADE,
+        on_delete=models.DO_NOTHING,
         related_name='team_group_players'
     )
     team_player = models.ForeignKey(
         'core.TeamPlayer',
-        on_delete=models.CASCADE,
+        on_delete=models.DO_NOTHING,
         related_name='team_group_players'
     )
     points_amount = models.IntegerField(

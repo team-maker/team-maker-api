@@ -10,6 +10,7 @@ class TeamGameSerializer(ModelSerializer):
     num_goals = SerializerMethodField(read_only=True)
     generated_points = SerializerMethodField(read_only=True)
     mvps = SerializerMethodField(read_only=True)
+    available_players_count = SerializerMethodField(read_only=True)
 
     class Meta:
         model = Game
@@ -19,10 +20,11 @@ class TeamGameSerializer(ModelSerializer):
             'team_id',
             'finished',
             'num_goals',
+            'available_players_count',
             'mvps',
             'generated_points',
             'home_team',
-            'away_team'
+            'away_team',
         )
 
     def get_num_goals(self, instance):
@@ -38,3 +40,6 @@ class TeamGameSerializer(ModelSerializer):
             mvps = instance.game_mvps()
             return TeamGroupPlayerSerializer(mvps, many=True).data
         return []
+
+    def get_available_players_count(self, instance):
+        return instance.available_players.filter(availability='going').count()
