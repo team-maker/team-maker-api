@@ -11,7 +11,7 @@ from team_maker.api.serializers import TeamPlayerStatsSerializer
 class TeamPlayerView(viewsets.ViewSet,
                      generics.ListCreateAPIView):
     renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
-    queryset = models.TeamPlayer.objects.order_by('-points_total')  # only users that can access the app
+    queryset = models.TeamPlayer.objects.order_by('-points_total')
     serializer_class = TeamPlayerSerializer
 
     def create(self, request, *args, **kwargs):
@@ -24,6 +24,11 @@ class TeamPlayerView(viewsets.ViewSet,
             raise ValidationError('Team not found')
 
         instance, created = self.queryset.get_or_create(team=team, player=player)
+        for game in team.games.filter(finished=False).all():
+            models.GameAvailablePlayer.objects.create(
+                game=game,
+                team_player=instance
+            )
         serializer = self.get_serializer()
         return Response(
             serializer.to_representation(instance),
