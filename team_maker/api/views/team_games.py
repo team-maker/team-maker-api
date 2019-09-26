@@ -13,7 +13,7 @@ class TeamGamesView(viewsets.ViewSet,
                     generics.RetrieveAPIView,
                     generics.GenericAPIView):
     renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
-    queryset = models.Game.objects  # only users that can access the app
+    queryset = models.Game.objects.order_by('-date')
     serializer_class = serializers.TeamGameSerializer
 
     def get_queryset(self):
