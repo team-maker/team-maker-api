@@ -60,7 +60,7 @@ class FacebookLoginView(mixins.UpdateModelMixin,
 
     def put(self, request, *args, **kwargs):
         request_data = request.data
-        if request_data['name']:
+        if 'name' in request_data.keys():
             names = request_data['name'].split(' ')
             request_data['first_name'] = names[0]
             request_data['last_name'] = names[-1]
