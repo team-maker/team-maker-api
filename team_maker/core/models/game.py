@@ -20,7 +20,7 @@ class Game(models.Model):
     team = models.ForeignKey(
         'core.Team',
         null=False,
-        related_name='team',
+        related_name='games',
         on_delete=models.DO_NOTHING
     )
     home_team = models.OneToOneField(
