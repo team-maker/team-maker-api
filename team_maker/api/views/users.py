@@ -60,10 +60,15 @@ class FacebookLoginView(mixins.UpdateModelMixin,
 
     def put(self, request, *args, **kwargs):
         request_data = request.data
-        names = request_data['name'].split(' ')
-        request_data['first_name'] = names[0]
-        request_data['last_name'] = names[-1]
-        del(request_data['name'])
+        if request_data['name']:
+            names = request_data['name'].split(' ')
+            request_data['first_name'] = names[0]
+            request_data['last_name'] = names[-1]
+            del(request_data['name'])
+        else:
+            request_data['first_name'] = 'CHANGE ME'
+            request_data['last_name'] = 'CHANGE ME'
+
         serializer = self.get_serializer(data=request_data)
         updated_instance = serializer.update(self.get_object(), request_data)
         return Response(serializer.to_representation(updated_instance), status=status.HTTP_201_CREATED)
