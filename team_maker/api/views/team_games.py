@@ -25,7 +25,7 @@ class TeamGamesView(viewsets.ViewSet,
         return game
 
     def create(self, request, *args, **kwargs):
-        game = self.queryset.create(
+        game = models.Game.objects.create(
             team_id=self.kwargs['team_pk'],
             date=request.data['date']
         )
