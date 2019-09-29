@@ -7,9 +7,10 @@ CURRENT_POINTS_WEIGHT = 0.2
 
 def generate_balanced_teams(game):
     team = game.team
-    team_players = team.team_players.all()
+    game_available_players = game.available_players.filter(availability='going').all()
     player_values = []
-    for team_player in team_players:
+    for game_team_player in game_available_players:
+        team_player = game_team_player.team_player
         value = team_player.player.rating * OWN_RATING_WEIGHT + team_player.points_total * CURRENT_POINTS_WEIGHT
         player_values.append({'team_player': team_player, 'value': value})
     player_values.sort(key=lambda i: i['value'], reverse=True)

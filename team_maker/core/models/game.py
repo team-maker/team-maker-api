@@ -35,6 +35,10 @@ class Game(models.Model):
         related_name='game_as_away_team',
         on_delete=models.CASCADE
     )
+    team_players_avalailable = models.ManyToManyField(
+        'core.TeamPlayer',
+        through='GameAvailablePlayer',
+    )
     date = models.DateField(null=True)
     finished = models.BooleanField(default=False)
 
