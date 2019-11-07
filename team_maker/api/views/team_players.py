@@ -25,7 +25,7 @@ class TeamPlayerView(viewsets.ViewSet,
 
         instance, created = self.queryset.get_or_create(team=team, player=player)
         for game in team.games.filter(finished=False).all():
-            models.GameAvailablePlayer.objects.create(
+            models.GameAvailablePlayer.objects.get_or_create(
                 game=game,
                 team_player=instance
             )
