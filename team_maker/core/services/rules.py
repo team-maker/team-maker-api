@@ -164,14 +164,11 @@ def rule_type_to_function(rule_type):
         'clean_sheet': generate_clean_sheet_points,
         'own_goal': generate_own_goal_points,
         'game_victory': generate_game_victory_points,
-        'game_defeat': generate_game_defeat_points,
-        'game_mvp': generate_game_mvp_points
+        'game_defeat': generate_game_defeat_points
     }
     return rules_switch.get(rule_type, lambda: "nothing")
 
 
 def generate_rule_points(team_rule, game):
-    print(team_rule)
     func = rule_type_to_function(team_rule.rule.rule_type)
-    print(team_rule.rule.rule_type)
     return func(team_rule, game)

@@ -1,4 +1,5 @@
 from team_maker.core import models
+from django.db.models import Q
 from .rules import generate_rule_points, generate_game_mvp_points
 
 OWN_RATING_WEIGHT = 0.8
@@ -60,7 +61,7 @@ def generate_balanced_teams(game):
 def distribute_game_points(game):
     team = game.team
     team_rules = models.TeamRule.objects.filter(team=team)
-    for team_rule in team_rules:
+    for team_rule in team_rules.filter(~Q(rule__rule_type='game_mvp')):
         generate_rule_points(team_rule, game)
     mvp_rule = team_rules.get(rule__rule_type='game_mvp')
     generate_game_mvp_points(mvp_rule, game)  
