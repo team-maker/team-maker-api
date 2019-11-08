@@ -1,5 +1,5 @@
 from team_maker.core import models
-from .rules import generate_rule_points
+from .rules import generate_rule_points, generate_game_mvp_points
 
 OWN_RATING_WEIGHT = 0.8
 CURRENT_POINTS_WEIGHT = 0.2
@@ -62,6 +62,7 @@ def distribute_game_points(game):
     team_rules = models.TeamRule.objects.filter(team=team)
     for team_rule in team_rules:
         generate_rule_points(team_rule, game)
+    generate_game_mvp_points('game_mvp', game)  
     for team_group_player in game.game_team_group_players():
         team_group_player.recalculate_points_amount()
         team_group_player.team_player.recalculate_points_amount()

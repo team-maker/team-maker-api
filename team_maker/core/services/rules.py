@@ -145,7 +145,6 @@ def generate_game_defeat_points(team_rule, game):
 
 
 def generate_game_mvp_points(team_rule, game):
-    return
     for mvp in game.game_mvps():
         models.Point.objects.create(
             team_group_player=mvp,
