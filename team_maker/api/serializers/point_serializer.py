@@ -6,5 +6,4 @@ class PointSerializer(ModelSerializer):
 
     class Meta:
         model = Point
-        fields = ('id', 'points_amount')
-
+        fields = ('id', 'points_amount', 'description')
