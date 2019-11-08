@@ -7,6 +7,7 @@ from team_maker.api import serializers
 
 class TeamGroupPlayerView(viewsets.ViewSet,
                           generics.ListAPIView,
+                          generics.RetrieveAPIView,
                           generics.GenericAPIView):
     renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
     queryset = models.TeamGroupPlayer.objects
@@ -19,3 +20,4 @@ class TeamGroupPlayerView(viewsets.ViewSet,
             team_group_id__in=team_group_ids
         ).order_by('-points_amount', 'team_player__position')
         return queryset
+
