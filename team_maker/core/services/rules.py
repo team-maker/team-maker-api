@@ -66,7 +66,7 @@ def generate_goals_scored_points(team_rule, game):
             models.Point.objects.create(
                 team_group_player=team_group_player,
                 points_amount=team_rule.points_amount * home_team_goals,
-                description='Points earned by Game Goals Conceded',
+                description='Points earned by Team Game Goals Scored',
                 team_rule=team_rule
             )
     away_team_goals, remainder = divmod(game.away_team_goals().count(), 2)
