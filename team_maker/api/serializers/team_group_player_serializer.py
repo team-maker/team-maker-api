@@ -1,6 +1,7 @@
 from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField, SerializerMethodField
 from team_maker.core.models import TeamGroupPlayer
 from team_maker.api.serializers import TeamPlayerSerializer
+from .point_serializer import PointSerializer
 
 
 class TeamGroupPlayerSerializer(ModelSerializer):
@@ -20,3 +21,16 @@ class TeamGroupPlayerSerializer(ModelSerializer):
 
     def get_goals_scored(self, instance):
         return instance.scored_goals.count()
+
+
+class TeamGroupPlayerWithPointsSerializer(ModelSerializer):
+    team_player = TeamPlayerSerializer(read_only=True)
+    points = PointSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = TeamGroupPlayer
+        fields = (
+            'team_player',
+            'points_amount',
+            'points'
+        )
