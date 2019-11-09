@@ -25,9 +25,6 @@ games_router = routers.NestedSimpleRouter(teams_router, r'games', lookup='game')
 games_router.register(r'available-players', views.AvailablePlayersView, base_name='available-players')
 games_router.register(r'group-players', views.TeamGroupPlayerView, base_name='team-group-players')
 games_router.register(r'goals', views.GameGoalsView, base_name='goals')
-
-group_players_router = routers.NestedSimpleRouter(games_router, r'group-players', lookup='group_player')
-group_players_router.register(r'points', views.GroupPlayerPointsView, base_name='points')
 router.register(r'teams/token', views.TeamByTokenView)
 
 urlpatterns = [
@@ -35,8 +32,12 @@ urlpatterns = [
     url(r'^', include(players_router.urls)),
     url(r'^', include(teams_router.urls)),
     url(r'^', include(games_router.urls)),
-    url(r'^', include(group_players_router.urls)),
     url(r'^team-players/(?P<team_player_pk>[^/.]+)/stats$', views.TeamPlayerStatsView.as_view(), name='team_player_stats'),
+    url(
+        r'^teams/(?P<team_pk>[^/.]+)/games/(?P<game_pk>[^/.]+)/group-players/(?P<pk>[^/.]+)/points$',
+        views.GroupPlayerPointsView.as_view(), 
+        name='group_player_points'
+    ),
     url(r'^login$', obtain_jwt_token),
     url(r'^facebook-login$', views.FacebookLoginView.as_view(), name='facebook-login'),
 ]
