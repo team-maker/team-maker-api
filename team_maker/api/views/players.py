@@ -11,7 +11,7 @@ class PlayersView(viewsets.ViewSet,
                   mixins.UpdateModelMixin,
                   generics.GenericAPIView):
     renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
-    queryset = models.Player.objects  # only users that can access the app
+    queryset = models.Player.objects
     serializer_class = PlayerSerializer
 
     def get_object(self):

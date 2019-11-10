@@ -8,7 +8,7 @@ class PlayerEvaluation(models.Model):
     evaluated_player = models.ForeignKey(
         'core.TeamPlayer',
         null=False,
-        related_name='other_evaluations',
+        related_name='evaluations',
         on_delete=models.CASCADE
     )
     evaluator_player = models.ForeignKey(
@@ -26,3 +26,5 @@ class PlayerEvaluation(models.Model):
         # Team Players should belong to the same team.
         if self.evaluated_player.team != self.evaluator_player.team:
             raise ValidationError(_('Players should belong to the same team'))
+        if self.evaluated_player == self.evaluator_player:
+            raise ValidationError(_('You should not evaluate yourself'))
