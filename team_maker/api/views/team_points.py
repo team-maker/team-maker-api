@@ -9,6 +9,6 @@ class TeamPointsView(viewsets.ViewSet,
                      generics.ListAPIView,
                      generics.GenericAPIView):
     renderer_classes = (JSONRenderer, BrowsableAPIRenderer, )
-    queryset = models.Point.objects.order_by('-points_amount')  # only users that can access the app
+    queryset = models.Point.objects.order_by('-points_amount')
     serializer_class = serializers.PointSerializer
 
