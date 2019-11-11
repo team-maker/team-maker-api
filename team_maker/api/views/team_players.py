@@ -4,7 +4,6 @@ from rest_framework.serializers import ValidationError
 from rest_framework.renderers import BrowsableAPIRenderer, JSONRenderer
 from rest_framework import generics, status, mixins
 from rest_framework import viewsets
-from rest_framework.views import APIView
 from team_maker.api.serializers import TeamPlayerSerializer
 from team_maker.api.serializers import TeamPlayerStatsSerializer
 
@@ -71,21 +70,3 @@ class TeamPlayerStatsView(mixins.RetrieveModelMixin,
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
-
-
-class TeamPlayerEvaluationView(APIView):
-
-    def put(self, request, pk):
-        user = self.request.data['user']
-        team = models.Team.get(pk=self.kwargs['team_pk'])
-        evaluator_player = models.TeamPlayer.get(
-            team__pk=team.pk,
-            player__pk=user.player.pk,
-        )
-        player_evaluation, created = self.queryset.get_or_create(
-            evaluator_player__pk=evaluator_player.pk,
-            evaluated_player__pk=self.kwargs['team_player_pk'],
-        )
-        player_evaluation.rating = self.request.data['rating']
-        player_evaluation.save()
-        return Response(status=status.HTTP_204_NO_CONTENT)
