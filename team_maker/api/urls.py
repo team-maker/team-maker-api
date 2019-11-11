@@ -38,7 +38,7 @@ urlpatterns = [
         name='team_player_stats'
     ),
     url(
-        r'^teams/(?P<team_pk>[^/.]+)/^team-players/(?P<team_player_pk>[^/.]+)/evaluate/(?P<pk>[^/.]+)$',
+        r'^teams/(?P<team_pk>[^/.]+)/team-players/(?P<team_player_pk>[^/.]+)/evaluate/(?P<pk>[^/.]+)$',
         views.TeamPlayerEvaluationView.as_view(),
         name='team_player_evaluate'
     ),

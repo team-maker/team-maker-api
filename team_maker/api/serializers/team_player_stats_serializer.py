@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from team_maker.core.models import TeamPlayer
+from team_maker.core.models import TeamPlayer, PlayerEvaluation
 from team_maker.api.serializers import PlayerSerializer
 from .evaluation_serializer import EvaluationSerializer
 
@@ -38,7 +38,14 @@ class TeamPlayerStatsSerializer(serializers.ModelSerializer):
         evaluator_player = self.context['request'].user.player
         team = instance.team
         evaluator_team_player = team.team_players.get(player=evaluator_player)
-        evaluation, created = instance.evaluations.get_or_create(
-            evaluator_player=evaluator_team_player
-        )
-        return EvaluationSerializer(evaluation).data
+        try:
+            evaluation = instance.evaluations.get(
+                evaluator_player=evaluator_team_player
+            )
+        except PlayerEvaluation.DoesNotExist:
+            evaluation = None
+        
+        if evaluation:
+            return EvaluationSerializer(evaluation).data
+        else:
+            return {}
