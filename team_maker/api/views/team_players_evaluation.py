@@ -11,6 +11,19 @@ class TeamPlayerEvaluationView(generics.UpdateAPIView):
     queryset = models.PlayerEvaluation.objects
     serializer_class = EvaluationSerializer
 
+    def get_object(self):
+        team = models.Team.objects.get(pk=self.kwargs['team_pk'])
+        player = self.request.user.player
+        evaluator_player = models.TeamPlayer.objects.get(
+            team=team,
+            player=player
+        )
+        player_evaluation, created = self.get_queryset().get_or_create(
+            evaluated_player_id=self.kwargs['team_player_pk'],
+            evaluator_player_id=evaluator_player.id,
+        )
+        return player_evaluation
+
     def put(self, request, *args, **kwargs):
         player_evaluation = self.get_object()
         player_evaluation.rating = self.request.data['rating']
