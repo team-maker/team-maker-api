@@ -32,7 +32,16 @@ urlpatterns = [
     url(r'^', include(players_router.urls)),
     url(r'^', include(teams_router.urls)),
     url(r'^', include(games_router.urls)),
-    url(r'^team-players/(?P<team_player_pk>[^/.]+)/stats$', views.TeamPlayerStatsView.as_view(), name='team_player_stats'),
+    url(
+        r'^teams/(?P<team_pk>[^/.]+)/team-players/(?P<team_player_pk>[^/.]+)/stats$',
+        views.TeamPlayerStatsView.as_view(),
+        name='team_player_stats'
+    ),
+    url(
+        r'^teams/(?P<team_pk>[^/.]+)/team-players/(?P<team_player_pk>[^/.]+)/evaluate$',
+        views.TeamPlayerEvaluationView.as_view(),
+        name='team_player_evaluate'
+    ),
     url(
         r'^teams/(?P<team_pk>[^/.]+)/games/(?P<game_pk>[^/.]+)/group-players/(?P<pk>[^/.]+)/points$',
         views.GroupPlayerPointsView.as_view(), 

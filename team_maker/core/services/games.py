@@ -2,7 +2,8 @@ from team_maker.core import models
 from django.db.models import Q
 from .rules import generate_rule_points, generate_game_mvp_points
 
-OWN_RATING_WEIGHT = 0.8
+OWN_RATING_WEIGHT = 0.2
+EVALUATIONS_WEIGHT = 0.6
 CURRENT_POINTS_WEIGHT = 0.2
 
 
@@ -12,7 +13,7 @@ def generate_balanced_teams(game):
     player_values = []
     for game_team_player in game_available_players:
         team_player = game_team_player.team_player
-        value = team_player.player.rating * OWN_RATING_WEIGHT + team_player.points_total * CURRENT_POINTS_WEIGHT
+        value = team_player.player.rating * OWN_RATING_WEIGHT + team_player.points_total * CURRENT_POINTS_WEIGHT + team_player.evaluations_avg() * EVALUATIONS_WEIGHT
         player_values.append({'team_player': team_player, 'value': value})
     player_values.sort(key=lambda i: i['value'], reverse=True)
     home_team = []
