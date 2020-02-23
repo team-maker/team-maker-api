@@ -48,7 +48,7 @@ class TeamPlayer(models.Model):
         )
         self.points_total = values['points']
         self.save()
-    
+
     def evaluations_avg(self):
         return self.evaluations.all().aggregate(
             rating_avg=Coalesce(models.Avg('rating'), 5)

@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.functions import Coalesce
 from .game_available_player import GameAvailablePlayer
+from .point import Point
 
 
 class CustomGameManager(models.Manager):
@@ -85,11 +86,15 @@ class Game(models.Model):
     def away_team_clean_sheet(self):
         return self.home_team_goals().count() == 0
 
-    def generated_points(self):
-        values = self.game_team_group_players().aggregate(
-            points=Coalesce(models.Sum('points_amount'), 0)
-        )
-        return values['points']
+    def points(self):
+        team_group_player_ids = self.game_team_group_players().values_list('pk', flat=True)
+        return Point.objects.filter(team_group_player__pk__in=team_group_player_ids)
+
+    def total_points_amount(self):
+        total_points_amount = self.game_team_group_players().aggregate(
+            models.Sum('points_amount')
+        )['points_amount__sum']
+        return total_points_amount
 
 
     def __str__(self):

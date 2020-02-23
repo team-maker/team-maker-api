@@ -67,6 +67,17 @@ class TeamGamesView(viewsets.ViewSet,
             status=status.HTTP_200_OK
         )
 
+    @action(detail=True, methods=['put'])
+    def recalculate_points(self, request, *args, **kwargs):
+        game = self.get_object()
+        game.points().delete()
+        services.games.distribute_game_points(game)
+        serializer = self.get_serializer()
+        return Response(
+            serializer.to_representation(game),
+            status=status.HTTP_200_OK
+        )
+
 
 class AvailablePlayersView(viewsets.ViewSet,
                            generics.ListCreateAPIView):

@@ -32,7 +32,13 @@ class TeamGroup(models.Model):
         self.team_group_players.order_by('-points_amount')
 
     def hattricks(self):
-        return self.goals().filter(own_goal=False).annotate(total=models.Count('scorer_id')).filter(total__gte=3)
+        scorer_ids = self.goals() \
+            .filter(own_goal=False) \
+            .values('scorer') \
+            .annotate(total=models.Count('scorer')) \
+            .filter(total__gte=3) \
+            .values('scorer')
+        return self.team_group_players.filter(pk__in=scorer_ids)
 
 
     def __str__(self):
