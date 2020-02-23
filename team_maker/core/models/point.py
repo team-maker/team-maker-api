@@ -21,3 +21,6 @@ class Point(models.Model):
     points_amount = models.IntegerField(
         validators=[MinValueValidator(1)]
     )
+
+    def __str__(self):
+        return "{}".format('team group player:' + self.team_group_player + '-' + self.points_amount)

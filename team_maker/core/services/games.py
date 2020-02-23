@@ -65,7 +65,7 @@ def distribute_game_points(game):
     for team_rule in team_rules.filter(~Q(rule__rule_type='game_mvp')):
         generate_rule_points(team_rule, game)
     mvp_rule = team_rules.get(rule__rule_type='game_mvp')
-    generate_game_mvp_points(mvp_rule, game)  
+    generate_game_mvp_points(mvp_rule, game)
     for team_group_player in game.game_team_group_players():
         team_group_player.recalculate_points_amount()
         team_group_player.team_player.recalculate_points_amount()
@@ -75,4 +75,3 @@ def distribute_game_points(game):
         team_player.save()
         position += 1
 
-    

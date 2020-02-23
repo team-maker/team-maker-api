@@ -22,16 +22,16 @@ def generate_goal_points(team_rule, game):
 
 
 def generate_hattrick_points(team_rule, game):
-    for goal in game.home_team.hattricks():
+    for scorer in game.home_team.hattricks():
         models.Point.objects.create(
-            team_group_player=goal.scorer,
+            team_group_player=scorer,
             points_amount=team_rule.points_amount,
             description='Points earned by Hattrick scored',
             team_rule=team_rule
         )
-    for goal in game.away_team.hattricks():
+    for scorer in game.away_team.hattricks():
         models.Point.objects.create(
-            team_group_player=goal.scorer,
+            team_group_player=scorer,
             points_amount=team_rule.points_amount,
             description='Points earned by Hattrick scored',
             team_rule=team_rule
