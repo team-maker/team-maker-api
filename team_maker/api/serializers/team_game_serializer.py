@@ -32,7 +32,7 @@ class TeamGameSerializer(ModelSerializer):
 
     def get_generated_points(self, instance):
         if instance.finished:
-            return instance.generated_points()
+            return instance.total_points_amount()
         return 0
 
     def get_mvps(self, instance):

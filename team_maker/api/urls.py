@@ -44,7 +44,7 @@ urlpatterns = [
     ),
     url(
         r'^teams/(?P<team_pk>[^/.]+)/games/(?P<game_pk>[^/.]+)/group-players/(?P<pk>[^/.]+)/points$',
-        views.GroupPlayerPointsView.as_view(), 
+        views.GroupPlayerPointsView.as_view(),
         name='group_player_points'
     ),
     url(r'^login$', obtain_jwt_token),
